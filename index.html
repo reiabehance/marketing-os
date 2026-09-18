@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
 :root{color-scheme:light;
  --wine:#7B0017;--wine2:#9c2236;--ink:#15150E;--ivory:#FFFAF1;--paper:#fffdf9;--card:#ffffff;
@@ -858,6 +859,7 @@ function setLive(t){const e=el('liveTxt');if(e)e.textContent=t;}
 
 /* ---------- NAV ---------- */
 const NAV=[
+ ["REPORTS",[["reader","📄","One-pager report"],["wow","📈","Week-on-week"]]],
  ["START",[["home","🏠","Home"],["capture","📥","Capture"]]],
  ["WORKSPACES",[["ws_Disha","🎨","Disha"],["ws_Vasavi","🎥","Vasavi"],["ws_Ashwanth","♛","Ashwanth"],["ws_Jacob","⚙","Jacob"]]],
  ["CREATE",[["prod","🎬","Production"],["pipeline","🗂","Pipeline"],["calendar","📅","Calendar"],["opscal","🗓","Operating calendar"],["postcal","🖼","Post calendar"],["reviews","📋","Reviews"],["ideas","✎","Ideas"]]],
@@ -866,7 +868,7 @@ const NAV=[
  ["TEAM",[["team","👥","Team"],["plan","▤","Weekly plan"],["tasks","✅","Tasks"]]],
  ["LIBRARY",[["social","🌐","Social footprint"],["pillars","◆","Pillars"],["events","📆","Events"],["performance","📣","Paid performance"],["trends","📈","Trends"],["moms","📝","Meeting notes"],["offers","🏷","Offers"],["contentideas","🎞️","Idea bank"],["outbound","💬","Outbound log"],["vendors","📦","Vendors"],["reelcost","🎥","Reel costs"],["influencers","🤝","Influencers"],["insights","◑","Insights"],["direction","➜","Direction"],["sources","✓","Data & proof"],["tools","🛠","Tools"],["archive","🗄","Archive"],["guide","❓","Guide"]]]
 ];
-const TITLES={home:["Home","Start here — pick what you need and go"],capture:["Capture","Message your tasks — they auto-assign"],command:["Command","Everything at a glance"],team:["Team","Who's doing what — each person's plate"],direction:["Direction","Objectives & where we're headed"],campaigns:["Campaigns","Plan & launch, end to end"],pillars:["Pillars","What we are doing for each communication angle"],pipeline:["Content Pipeline","Every piece from brief → shoot → edit → live, per channel"],calendar:["Calendar","Publish dates & deadlines, per channel"],leads:["Leads & Revenue","Enquiry → consult → order · true CAC by channel"],budget:["Budget","Planned vs actual, by month"],offers:["Offers","What we are promising — and the margin guardrail"],events:["Events","What's on — launches, festivals and store moments"],prod:["Production studio","Concept → script → shot list → shoot → budget, per video"],social:["Social footprint","Followers across every Réia account"],postperf:["Reporting & performance","What\u2019s working, formats, campaigns, and every post\u2019s D1\u00b7D7\u00b7D14\u00b7D31 detail"],postcal:["Post calendar","Thumbnails by day + at-a-glance performance"],opscal:["Operating calendar","Every deadline across the engine · filter by person"],plan:["Weekly plan","Each person's week — goals, items, status"],platforms:["Channels","Build → grow → scale, per marketing channel"],moms:["Meeting notes","Minutes & delegated action items"],ideas:["Ideas","The content backlog"],tasks:["Execution","Tasks shipped & in progress"],outbound:["Outbound log","100/day — handle + comment"],vendors:["Vendors","What's pending on each vendor"],reelcost:["Reel costs","All-in cost per reel"],influencers:["Influencers","Collabs, contacts & barter"],reporting:["Reporting","Is it still working?"],insights:["Insights","Brand, market, levers & gaps"],trends:["Trends","Month-over-month trajectory"],performance:["Paid / Performance","What is running, winning, losing"],spend:["Spend","PO ledger + spend analysis"],contentideas:["Idea bank","Road to 50k + founder verdicts"],reviews:["Reviews","Submissions, feedback & next steps"],sources:["Data & proof","Where every number comes from"],guide:["Guide & team","Rules, routing & team roster"],tools:["Tools","Automation repository — what we built & how to use it"],archive:["Archive","Completed tasks, filed"]};
+const TITLES={home:["Home","Start here — pick what you need and go"],reader:["One-pager report","Auto-built from the OS — edit any section, preview, export PDF"],wow:["Week-on-week","Everyone's highlights, week by week — the team's momentum at a glance"],capture:["Capture","Message your tasks — they auto-assign"],command:["Command","Everything at a glance"],team:["Team","Who's doing what — each person's plate"],direction:["Direction","Objectives & where we're headed"],campaigns:["Campaigns","Plan & launch, end to end"],pillars:["Pillars","What we are doing for each communication angle"],pipeline:["Content Pipeline","Every piece from brief → shoot → edit → live, per channel"],calendar:["Calendar","Publish dates & deadlines, per channel"],leads:["Leads & Revenue","Enquiry → consult → order · true CAC by channel"],budget:["Budget","Planned vs actual, by month"],offers:["Offers","What we are promising — and the margin guardrail"],events:["Events","What's on — launches, festivals and store moments"],prod:["Production studio","Concept → script → shot list → shoot → budget, per video"],social:["Social footprint","Followers across every Réia account"],postperf:["Reporting & performance","What\u2019s working, formats, campaigns, and every post\u2019s D1\u00b7D7\u00b7D14\u00b7D31 detail"],postcal:["Post calendar","Thumbnails by day + at-a-glance performance"],opscal:["Operating calendar","Every deadline across the engine · filter by person"],plan:["Weekly plan","Each person's week — goals, items, status"],platforms:["Channels","Build → grow → scale, per marketing channel"],moms:["Meeting notes","Minutes & delegated action items"],ideas:["Ideas","The content backlog"],tasks:["Execution","Tasks shipped & in progress"],outbound:["Outbound log","100/day — handle + comment"],vendors:["Vendors","What's pending on each vendor"],reelcost:["Reel costs","All-in cost per reel"],influencers:["Influencers","Collabs, contacts & barter"],reporting:["Reporting","Is it still working?"],insights:["Insights","Brand, market, levers & gaps"],trends:["Trends","Month-over-month trajectory"],performance:["Paid / Performance","What is running, winning, losing"],spend:["Spend","PO ledger + spend analysis"],contentideas:["Idea bank","Road to 50k + founder verdicts"],reviews:["Reviews","Submissions, feedback & next steps"],sources:["Data & proof","Where every number comes from"],guide:["Guide & team","Rules, routing & team roster"],tools:["Tools","Automation repository — what we built & how to use it"],archive:["Archive","Completed tasks, filed"]};
 let view='command',currentPerson='Disha';
 function buildNav(){const allow=ROLE==='all'?null:new Set(ROLE_CORE.concat(ROLE_TABS[ROLE]||[]));
  const NAV2=NAV.map(g=>g[0]==='WORKSPACES'?['WORKSPACES',TEAM.map(n=>['ws_'+n,'👤',n])]:g).map(g=>[g[0],g[1].filter(b=>!allow||String(b[0]).indexOf('ws_')===0||allow.has(b[0]))]).filter(g=>g[1].length);
@@ -931,6 +933,8 @@ function renderMod(mod){const m=MODS[mod],c=el(m.tbl);if(c)c.innerHTML=buildTabl
 
 /* ---------- VIEW TEMPLATES ---------- */
 const INV={
+ reader:"Auto-built one-pager from the whole OS — edit any section, preview, then export a clean PDF. Rebuild pulls the latest numbers.",
+ wow:"The bird&rsquo;s-eye grid — scan what every person shipped, week over week, and spot who is moving and who is stalled.",
  command:"Your daily cockpit — what needs a decision, what's at risk, and the few numbers that matter. Start here, act, move on.",
  capture:"Log anything in one line — it auto-files to the right tracker and assigns an owner. Capture fast, sort later.",
  team:"Who's carrying what — spot overload and key-person risk before it bites.",
@@ -974,9 +978,173 @@ function tblCard(mod,addLabel){return `<div class="acts"><button class="btn sm" 
 function chartCard(id,h){return `<div class="card"><div class="chartbox${h?' sm':''}"><canvas id="${id}"></canvas></div></div>`;}
 function collap(t,s,inner,open,attr){return `<details class="collap" ${open?'open':''} ${attr||''}><summary>${t}${s?` <small>${s}</small>`:''}</summary><div class="cbody">${inner}</div></details>`;}
 
+/* ================= ONE-PAGER READER MODULE ================= */
+function rdrNum(n){n=parseFloat(String(n==null?'':n).replace(/[^0-9.\-]/g,''));return isNaN(n)?0:n;}
+function rdrFmt(n){return (Math.round(rdrNum(n))).toLocaleString('en-IN');}
+function rdrEsc(s){return (s==null?'':(''+s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function readerAuto(){
+ var st=state, m=st.metrics||{}, tg=st.targets||{}, dir=st.dir||{};
+ var pipe=st.pipeline||[], byStat={}, exec=0;
+ pipe.forEach(function(r){var s=(r&&r[5])||'—';byStat[s]=(byStat[s]||0)+1;if(s==='Executed')exec++;});
+ var ready=byStat['Ready']||0, shoot=byStat['Shoot']||0;
+ var prod=st.prod||[], scripted=prod.filter(function(p){return p&&p.status==='Scripted';}).length;
+ var rev=st.reviews||[], revFin=rev.filter(function(r){return r&&r.finalized===true;}).length;
+ var pa=(st.postAnalytics||[]).filter(function(e){return e&&e.m&&typeof e.m==='object'&&Object.keys(e.m).length;});
+ var views=0, posts=[];
+ pa.forEach(function(e){var v=rdrNum((e.m.d31&&e.m.d31.views)||(e.m.d14&&e.m.d14.views)||(e.m.d1&&e.m.d1.views)||0);views+=v;posts.push([e.t||'(untitled)',v]);});
+ posts.sort(function(a,b){return b[1]-a[1];});
+ var foll=rdrNum(m.followers), tgtFoll=rdrNum(tg.followers)||15000;
+ var hist=st.history||[], start=8873;
+ var eng=hist.length?hist[hist.length-1][2]:(m.engagement||'');
+ function joinLines(arr){return arr.map(function(x){return x[0]+' | '+x[1];}).join('\n');}
+ var kpis=[
+  ['Instagram followers', rdrFmt(foll), 'goal '+rdrFmt(tgtFoll)],
+  ['In-house engagement', (eng||'—')+'%', 'target '+(rdrNum(tg.engagement)||3)+'%'],
+  ['Reach tracked', rdrFmt(views), 'views across '+pa.length+' posts'],
+  ['Content in motion', rdrFmt(pipe.length), exec+' shipped']
+ ].map(function(k){return k.join(' | ');}).join('\n');
+ var shipped=joinLines([
+  ['Content briefs in pipeline', rdrFmt(pipe.length)],
+  ['Executed / ready', exec+' live · '+ready+' ready · '+shoot+' in shoot'],
+  ['Shoots in production', prod.length+' · '+scripted+' scripted'],
+  ['Creative reviews run', rev.length+' · '+revFin+' finalised'],
+  ['Posts measured', pa.length],
+  ['Creators sourced', (st.influencers||[]).length]
+ ]);
+ var topp=joinLines(posts.slice(0,5).map(function(p){return [String(p[0]).slice(0,46), rdrFmt(p[1])+' views'];}));
+ var pill=joinLines((st.commPillars||[]).map(function(p){return [p.name||'', (p.owner||'')+' · '+(p.status||'')];}));
+ var chan=joinLines((st.socialAccounts||[]).filter(function(a){return a&&a[3]!==''&&a[3]!=null;}).slice(0,6).map(function(a){return [a[0]+' · @'+a[1], rdrFmt(a[3])+(a[4]?(' · '+rdrFmt(a[4])+' posts'):'')];}));
+ var week=joinLines((st.plan||[]).map(function(r){return [(r[3]||r[2]||''), (r[4]||'')];}).filter(function(x){return x[0];}));
+ var pt=st.paidTotals||{}, mt=st.metaTotals||{};
+ var paid=joinLines([
+   ['Meta — conversions', rdrFmt(mt.conv||0)+' · CPA ₹'+rdrFmt(mt.cpa||0)],
+   ['Google — spend', '₹'+rdrFmt(pt.spend||0)+' · CPA ₹'+rdrFmt(pt.cpa||0)]
+ ]);
+ var nextTxt=(dir.bets||'')+(dir.month?('\nFree levers on now: '+dir.month):'');
+ return {
+  title:'The Route to '+(tgtFoll>=1000?Math.round(tgtFoll/1000)+'K':tgtFoll)+' — and the engine behind it',
+  asof:new Date().toISOString().slice(0,10),
+  north:dir.quarter||'Make Instagram a measurable consult engine.',
+  kpis:kpis, goalNow:foll, goalStart:start, goalTarget:tgtFoll, goalStretch:20000,
+  secs:[
+   {id:'shipped',title:"What we've shipped",on:true,body:shipped},
+   {id:'topposts',title:'Reach that landed',on:true,body:topp},
+   {id:'pillars',title:'The engine — pillars',on:true,body:pill},
+   {id:'channels',title:'Channels',on:true,body:chan},
+   {id:'week',title:"This week's plan",on:true,body:week},
+   {id:'paid',title:'Paid, in brief',on:true,body:paid},
+   {id:'teamhi',title:'Team highlights',on:true,body:''},
+   {id:'next',title:'Live & next',on:true,body:nextTxt}
+  ],
+  footer:'Team: '+((st.team||[]).map(function(t){return t[0];}).filter(Boolean).join(' · '))+'  |  reia.diamonds'
+ };
+}
+function readerEnsure(){if(!state.reader)state.reader=readerAuto();if(!state.reader.secs)state.reader.secs=readerAuto().secs;}
+function readerModel(){return state.reader||readerAuto();}
+function readerRebuild(){if(!confirm('Rebuild the report from the latest OS data? This replaces the current edits.'))return;state.reader=readerAuto();save();renderReader();var h=el('readerHint');if(h){h.textContent='Rebuilt from live OS ✓';setTimeout(function(){h.textContent='';},2200);}}
+function readerU(k,v){readerEnsure();state.reader[k]=v;save();renderReaderPaper();}
+function readerSecU(id,k,v){readerEnsure();var s=state.reader.secs.filter(function(x){return x.id===id;})[0];if(!s)return;s[k]=v;save();if(k==='on'){renderReader();}else{renderReaderPaper();}}
+function readerRows(body){return String(body||'').split('\n').map(function(l){l=l.trim();if(!l)return '';var i=l.indexOf('|');if(i<0)return '<div class="rp-p">'+rdrEsc(l)+'</div>';return '<div class="rp-row"><b>'+rdrEsc(l.slice(0,i).trim())+'</b><span class="r">'+rdrEsc(l.slice(i+1).trim())+'</span></div>';}).join('');}
+function renderReader(){
+ var e=el('readerEditor'); if(!e) return;
+ var m=readerModel();
+ var secForm=m.secs.map(function(s){if(s.id==='teamhi'){return `<div class="rdrcard"><div class="hd"><input type="checkbox" ${s.on!==false?'checked':''} onchange="readerSecU('teamhi','on',this.checked)"><b style="flex:1">Team highlights</b></div><div class="note" style="margin-bottom:6px">Pulled live from each person's workspace — not edited here. Use the arrows to view any week.</div><div style="display:flex;align-items:center;gap:8px"><button class="btn ghost tiny" onclick="readerWeekNav(-1)">◀ prev</button><b style="font-size:12px">Week of ${rdrWeekLabel(rdrSelWeek())}</b><button class="btn ghost tiny" onclick="readerWeekNav(1)">next ▶</button></div></div>`;}return `<div class="rdrcard"><div class="hd"><input type="checkbox" ${s.on!==false?'checked':''} onchange="readerSecU('${s.id}','on',this.checked)"><input type="text" value="${rdrEsc(s.title)}" onchange="readerSecU('${s.id}','title',this.value)"></div><textarea onchange="readerSecU('${s.id}','body',this.value)" placeholder="One item per line — Label | Value">${rdrEsc(s.body)}</textarea></div>`;}).join('');
+ e.innerHTML=`<div class="rdrfield"><label>Report title</label><input type="text" style="width:100%" value="${rdrEsc(m.title)}" onchange="readerU('title',this.value)"></div>`
+  +`<div class="rdrfield"><label>As of (date)</label><input type="date" value="${rdrEsc(m.asof)}" onchange="readerU('asof',this.value)"></div>`
+  +`<div class="rdrfield"><label>North-star line</label><textarea style="width:100%;min-height:52px" onchange="readerU('north',this.value)">${rdrEsc(m.north)}</textarea></div>`
+  +`<div class="rdrfield"><label>KPI tiles — one per line: Label | Value | Sub</label><textarea style="width:100%;min-height:86px" onchange="readerU('kpis',this.value)">${rdrEsc(m.kpis)}</textarea></div>`
+  +`<div class="rdrfield"><label>Goal bar — now / start / target / stretch</label><div style="display:flex;gap:6px"><input class="num" style="width:25%" value="${rdrEsc(m.goalNow)}" onchange="readerU('goalNow',this.value)"><input class="num" style="width:25%" value="${rdrEsc(m.goalStart)}" onchange="readerU('goalStart',this.value)"><input class="num" style="width:25%" value="${rdrEsc(m.goalTarget)}" onchange="readerU('goalTarget',this.value)"><input class="num" style="width:25%" value="${rdrEsc(m.goalStretch)}" onchange="readerU('goalStretch',this.value)"></div></div>`
+  +`<div class="note" style="margin:10px 0 6px;font-weight:600">Sections — untick to hide, edit freely</div>`
+  +secForm
+  +`<div class="rdrfield"><label>Footer line</label><input type="text" style="width:100%" value="${rdrEsc(m.footer)}" onchange="readerU('footer',this.value)"></div>`;
+ renderReaderPaper();
+}
+function renderReaderPaper(){
+ var h=el('readerPaperHolder'); if(!h) return;
+ var m=readerModel();
+ var kpis=String(m.kpis||'').split('\n').filter(function(x){return x.trim();}).slice(0,4).map(function(l){var p=l.split('|');return `<div class="rp-kpi"><div class="l">${rdrEsc((p[0]||'').trim())}</div><div class="v">${rdrEsc((p[1]||'').trim())}</div><div class="s">${rdrEsc((p[2]||'').trim())}</div></div>`;}).join('');
+ var now=rdrNum(m.goalNow),start=rdrNum(m.goalStart),tgt=rdrNum(m.goalTarget);
+ var pct=tgt>start?Math.max(0,Math.min(100,Math.round((now-start)/(tgt-start)*100))):0;
+ var secs=m.secs.filter(function(s){return s.on!==false;});
+ var half=Math.ceil(secs.length/2);
+ function col(list){return list.map(function(s){var body=s.id==='teamhi'?readerTeamRows(rdrSelWeek()):readerRows(s.body);var ttl=s.id==='teamhi'?('Team highlights — week of '+rdrWeekLabel(rdrSelWeek())):s.title;return `<div class="rp-sec"><div class="rp-sh">${rdrEsc(ttl)}</div>${body}</div>`;}).join('');}
+ var dfmt=m.asof?new Date(m.asof).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}):'';
+ h.innerHTML=`<div id="readerPaper">`
+  +`<div class="rp-top"><div><div class="rp-brand">Réia Diamonds</div><div class="rp-kick">Marketing OS · One-Page Reader</div></div><div style="text-align:right;font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:1px">As of<br><b style="color:var(--ink);font-size:12px">${rdrEsc(dfmt)}</b></div></div>`
+  +`<div class="rp-title">${rdrEsc(m.title)}</div><div class="rp-north">${rdrEsc(m.north)}</div>`
+  +`<div class="rp-kpis">${kpis}</div>`
+  +`<div class="rp-goal"><div class="rp-gh"><span>Progress to <b>${rdrFmt(tgt)}</b></span><span><b>${pct}%</b> of the way</span></div><div class="rp-bar"><i style="width:${pct}%"></i></div><div class="rp-ticks"><span>${rdrFmt(start)}</span><span>${rdrFmt(now)} today</span><span>${rdrFmt(tgt)}</span></div></div>`
+  +`<div class="rp-cols"><div>${col(secs.slice(0,half))}</div><div>${col(secs.slice(half))}</div></div>`
+  +`<div class="rp-foot"><span>Live from the OS · generated ${rdrEsc(dfmt)}</span><span>${rdrEsc(m.footer)}</span></div>`
+  +`</div>`;
+}
+function readerPDF(){
+ var node=el('readerPaper'); if(!node){alert('Preview not ready yet — open the One-pager report tab first.');return;}
+ if(typeof html2pdf==='undefined'){alert('PDF tool is still loading — try again in a second.');return;}
+ var name='reia-os-reader-'+(readerModel().asof||'today')+'.pdf';
+ var hint=el('readerHint'); if(hint)hint.textContent='Generating PDF…';
+ html2pdf().set({filename:name,margin:6,image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,useCORS:true,backgroundColor:'#FFFAF1'},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'},pagebreak:{mode:['avoid-all','css']}}).from(node).save().then(function(){if(hint)hint.textContent='Saved ✓';setTimeout(function(){if(hint)hint.textContent='';},2000);}).catch(function(){if(hint)hint.textContent='';});
+}
+function readerHTML(){return `
+<style>
+#readerSplit{display:grid;grid-template-columns:minmax(260px,340px) 1fr;gap:18px;align-items:start}
+@media(max-width:860px){#readerSplit{grid-template-columns:1fr}}
+.rdrfield{margin-bottom:10px}
+.rdrfield label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted2);margin-bottom:3px}
+.rdrcard{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:10px;background:var(--paper)}
+.rdrcard .hd{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.rdrcard .hd input[type=text]{flex:1;font-weight:600}
+.rdrcard textarea{width:100%;min-height:80px;font-size:12px;font-family:inherit;line-height:1.5}
+#readerPaperHolder{overflow:auto}
+#readerPaper{max-width:760px;width:100%;margin:0 auto;background:var(--ivory);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:30px 34px;box-shadow:var(--sh)}
+.rp-top{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid var(--wine);padding-bottom:12px}
+.rp-brand{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--wine)}
+.rp-kick{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted2)}
+.rp-title{font-family:'Cormorant Garamond',serif;font-size:31px;font-weight:700;margin:16px 0 4px;line-height:1.03;color:var(--ink)}
+.rp-north{font-family:'Lora',Georgia,serif;font-style:italic;color:var(--wine);font-size:13px}
+.rp-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0 10px}
+.rp-kpi{border:1px solid var(--line);border-radius:10px;padding:10px;background:#fff}
+.rp-kpi .l{font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted2)}
+.rp-kpi .v{font-family:'Cormorant Garamond',serif;font-size:25px;font-weight:700;color:var(--wine);line-height:1.05}
+.rp-kpi .s{font-size:10px;color:var(--muted)}
+.rp-goal{border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-bottom:16px;background:#fff}
+.rp-gh{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:6px}
+.rp-bar{height:10px;border-radius:6px;background:var(--soft);overflow:hidden}
+.rp-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--wine),var(--wine2))}
+.rp-ticks{display:flex;justify-content:space-between;font-size:9px;color:var(--muted2);margin-top:5px}
+.rp-cols{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.rp-sec{margin-bottom:14px;break-inside:avoid}
+.rp-sh{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:700;color:var(--wine);border-bottom:1px solid var(--line);padding-bottom:4px;margin-bottom:7px}
+.rp-row{display:flex;justify-content:space-between;gap:10px;font-size:11.5px;padding:3px 0;border-bottom:1px dotted #eadfce}
+.rp-row b{font-weight:500;color:var(--ink)}
+.rp-row .r{color:var(--muted);white-space:nowrap}
+.rp-p{font-size:11.5px;color:var(--muted);line-height:1.5;padding:2px 0}
+.rp-foot{margin-top:14px;border-top:2px solid var(--wine);padding-top:8px;font-size:10px;color:var(--muted2);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+</style>
+<div class="lead">This one-pager builds itself from the whole OS. Edit any field on the left, watch the preview update, then download a clean PDF. <b>↻ Rebuild from OS</b> refreshes every number to the latest.</div>
+<div class="acts" style="gap:8px;flex-wrap:wrap">
+ <button class="btn sm" onclick="readerRebuild()">↻ Rebuild from OS</button>
+ <button class="btn" onclick="readerPDF()">⬇ Download PDF</button>
+ <span class="note" id="readerHint" style="align-self:center"></span>
+</div>
+<div id="readerSplit"><div id="readerEditor"></div><div><div class="note" style="margin-bottom:6px;font-weight:600">Live preview</div><div id="readerPaperHolder"></div></div></div>`;}
+
+/* ================= WEEK-ON-WEEK BIRD'S-EYE VIEW ================= */
+var wowN=8;
+function wowSet(n){wowN=n;renderWoW();}
+function wowWeeks(){weekHiMig();var set={};Object.keys(state.weekHi||{}).forEach(function(n){Object.keys(state.weekHi[n]||{}).forEach(function(w){if(state.weekHi[n][w])set[w]=1;});});var arr=Object.keys(set).sort().reverse();var cur=rdrWeekId();if(arr.indexOf(cur)<0)arr.unshift(cur);return arr;}
+function renderWoW(){var wrp=el('wowWrap');if(!wrp)return;weekHiMig();var team=(state.team||[]).map(function(t){return t&&t[0];}).filter(Boolean);var weeks=wowWeeks().slice(0,wowN);
+ var ctrl=`<div class="acts" style="gap:6px;flex-wrap:wrap"><span class="note" style="align-self:center;margin-right:4px">Show:</span>`+[6,8,12,52].map(function(k){return `<button class="btn ${k===wowN?'':'ghost '}sm" onclick="wowSet(${k})">${k===52?'All':'Last '+k}</button>`;}).join('')+`</div>`;
+ var head=`<tr><th style="min-width:120px;position:sticky;left:0;background:var(--card);z-index:2">Team / Week</th>`+weeks.map(function(wk){var c=team.filter(function(n){return weekHiGet(n,wk);}).length;var pc=team.length?Math.round(c/team.length*100):0;var col=pc>=75?'var(--good)':pc>=40?'var(--warn)':'var(--bad)';return `<th style="min-width:190px">${rdrWeekLabel(wk)}<div class="note" style="font-weight:400;color:${col}">${c}/${team.length} reported</div></th>`;}).join('')+`</tr>`;
+ var body=team.map(function(n){var filled=weeks.filter(function(wk){return weekHiGet(n,wk);}).length;return `<tr><td style="font-weight:600;position:sticky;left:0;background:var(--card)"><a href="#" onclick="go('ws_${n}');return false" style="color:var(--wine)">${rdrEsc(n)}</a><div class="note" style="font-weight:400">${filled}/${weeks.length} wks</div></td>`+weeks.map(function(wk){var v=weekHiGet(n,wk);return `<td style="vertical-align:top;font-size:12px;line-height:1.45;white-space:pre-wrap">${v?rdrEsc(v):'<span class="note">—</span>'}</td>`;}).join('')+`</tr>`;}).join('');
+ wrp.innerHTML=ctrl+`<div class="card flush" style="margin-top:10px"><div class="tw" style="max-height:660px;overflow:auto"><table style="min-width:100%">${head}${body}</table></div></div>`+(team.length&&weeks.length?`<div class="note" style="margin-top:8px">Reads live from each person's workspace highlights. Green = strong participation that week, red = gaps. Click a name to open their workspace.</div>`:`<div class="note" style="margin-top:8px">No weekly highlights logged yet — as the team fills their workspace highlights, weeks appear here.</div>`);
+}
+
 function buildViews(){
  el('views').innerHTML=[
   sec('home','<div id="homeWrap"></div>'),
+  sec('reader',readerHTML()),
+  sec('wow','<div class="lead">A bird&rsquo;s-eye grid of every person&rsquo;s weekly highlights — scan the whole team&rsquo;s momentum, week over week.</div><div id="wowWrap"></div>'),
   sec('social','<div class="lead">Every Réia account in one place — followers and posts across Instagram, YouTube, Pinterest and LinkedIn. Instagram refreshes automatically.</div><div id="socialWrap"></div>'),
   sec('postperf','<div class="lead">Every post, by channel — how it performed at 1 day, 3 days, 1 week and 1 month, so you can see what is working and what is not.</div><div id="postperfWrap"></div>'),
   sec('postcal','<div class="lead">Thumbnails of what went out each day, with performance at a glance. Click any thumbnail to open the post.</div><div id="postcalWrap"></div>'),
@@ -2037,6 +2205,15 @@ function archiveDone(){if(!Array.isArray(state.archive))state.archive=[];const t
 function restoreArch(i){const r=state.archive.splice(i,1)[0];if(r){if(!Array.isArray(state.tasks))state.tasks=[];state.tasks.push([r[0],r[1],r[2],'To do',r[4]||'']);}save();renderArchive();const t=el('t_tasks');if(t)renderMod('tasks');}
 function wsSection(title,link,inner){return `<div class="sh">${title} <small><a href="#" onclick="go('${link}');return false" style="color:var(--wine)">open full tab →</a></small></div>${inner}`;}
 function wsList(title,link,arr){return wsSection(title,link,arr.length?`<div class="card">`+arr.map(x=>`<div class="list-row" style="font-size:13px">${esc(x)}</div>`).join('')+`</div>`:'<div class="note" style="margin-bottom:6px">Nothing here right now.</div>');}
+function rdrWeekId(d){d=d?new Date(d):new Date();var day=(d.getDay()+6)%7;d.setDate(d.getDate()-day);return d.toISOString().slice(0,10);}
+function rdrWeekLabel(id){try{var d=new Date(id);var e=new Date(d);e.setDate(e.getDate()+6);var o={day:'numeric',month:'short'};return d.toLocaleDateString('en-GB',o)+' – '+e.toLocaleDateString('en-GB',o);}catch(_e){return id;}}
+function weekHiMig(){if(!state.weekHi)state.weekHi={};var cur=rdrWeekId();Object.keys(state.weekHi).forEach(function(n){var v=state.weekHi[n];if(typeof v==='string'){var o={};if(v)o[cur]=v;state.weekHi[n]=o;}});}
+function weekHiGet(n,wk){weekHiMig();var o=state.weekHi[n];return (o&&typeof o==='object'&&o[wk])||'';}
+function weekHiU(n,v){weekHiMig();if(!state.weekHi[n]||typeof state.weekHi[n]!=='object')state.weekHi[n]={};state.weekHi[n][rdrWeekId()]=v;save();}
+function weekHiHistoryHTML(n){weekHiMig();var o=state.weekHi[n]||{};var cur=rdrWeekId();var wks=Object.keys(o).filter(function(w){return w!==cur&&o[w];}).sort().reverse();if(!wks.length)return '';return '<details class="collap" style="margin-top:8px"><summary>Earlier weeks <small>'+wks.length+' logged · week-on-week</small></summary><div class="cbody">'+wks.map(function(w){return '<div style="padding:7px 0;border-bottom:1px solid var(--line)"><div class="note" style="font-weight:600;color:var(--wine)">Week of '+rdrWeekLabel(w)+'</div><div style="font-size:12.5px;white-space:pre-wrap">'+rdrEsc(o[w])+'</div></div>';}).join('')+'</div></details>';}
+function rdrSelWeek(){return (state.reader&&state.reader.weekSel)||rdrWeekId();}
+function readerWeekNav(delta){readerEnsure();var w=new Date(rdrSelWeek());w.setDate(w.getDate()+delta*7);var id=rdrWeekId(w);var cur=rdrWeekId();if(new Date(id).getTime()>new Date(cur).getTime())id=cur;state.reader.weekSel=id;save();renderReader();}
+function readerTeamRows(wk){weekHiMig();return (state.team||[]).map(function(t){var nm=t&&t[0];if(!nm)return '';var v=(weekHiGet(nm,wk)||'').replace(/\|/g,'/').replace(/\n+/g,' · ').trim();return '<div class="rp-p"><b style="color:var(--ink)">'+rdrEsc(nm)+'</b> — '+rdrEsc(v||'(no update yet)')+'</div>';}).filter(Boolean).join('');}
 function renderPerson(){const n=currentPerson,w=el('wsWrap');if(!w)return;if(!state.notes)state.notes={};const tt=s=>String(s||'').replace(/^[:\-\s]+/,'');
  const all=(state.tasks||[]).map((r,i)=>({r,i})).filter(x=>x.r[2]===n);
  const open=all.filter(x=>x.r[3]!=='Done'),done=all.length-open.length;
@@ -2065,7 +2242,8 @@ function renderPerson(){const n=currentPerson,w=el('wsWrap');if(!w)return;if(!st
    const pinBtn=`<button class="icobtn" title="${isP(x)?'Unpin from Focus':'Pin to Focus'}" onclick="pinTask(${x.i})" style="color:${isP(x)?'var(--wine)':'var(--muted2)'}">${isP(x)?'★':'☆'}</button>`;
    return `<div class="card" ${usingPins?`draggable="true" ondragstart="dragTask(${x.i})" ondragover="event.preventDefault()" ondrop="dropFocus(${x.i})"`:''} style="border-left:4px solid ${bord[pri(x)]}"><div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">${ctrls}<select title="Set priority" style="width:auto;padding:3px 8px;font-size:11px;font-weight:600" onchange="gUpd('tasks',${x.i},5,this.value);renderPerson()">${PO.map(o=>`<option ${o===pri(x)?'selected':''}>${o}</option>`).join('')}</select><span style="margin-left:auto;display:flex;gap:1px">${arrows}${pinBtn}</span></div><div style="font-size:14.5px;font-weight:500;margin-bottom:6px;line-height:1.45">${esc(tt(x.r[1]))}</div><div class="note" style="margin-bottom:10px">${esc(x.r[0])||'Task'} · ${by(x)}${x.r[8]?' · '+esc(x.r[8]):''}${x.r[4]?` · ${flink(x.r[4])}`:''}</div><div style="display:flex;gap:6px"><button class="btn ghost tiny" onclick="gUpd('tasks',${x.i},3,'In progress');renderPerson()">▶ Start</button><button class="btn tiny" onclick="gUpd('tasks',${x.i},3,'Done');renderPerson()">✓ Done</button></div></div>`;}).join('')+'</div>':'<div class="card"><div class="note">All clear - nothing open. Capture a new task, or rest easy. 🎉</div></div>';
  {const lk=(state.wsLinks&&state.wsLinks[n])||[];html+=`<div class="sh">My working links &amp; drafts <small>docs, Canva, drive — your drafts live here</small></div><div class="card"><div class="acts" style="margin:0 0 6px"><button class="btn ghost sm" onclick="wsLinkAdd('${n}')">+ add link</button></div>`+(lk.length?lk.map((l,j)=>`<div style="display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)"><input style="width:150px;border:0;background:transparent;font-weight:500" value="${esc(l[0]||'')}" placeholder="label" onchange="wsLinkU('${n}',${j},0,this.value)"><input style="flex:1;border:0;background:transparent;font-size:12.5px" value="${esc(l[1]||'')}" placeholder="paste link (Google Doc / Canva / Drive)" onchange="wsLinkU('${n}',${j},1,this.value)">${/^https?:/i.test(l[1]||'')?`<a href="${esc(l[1])}" target="_blank" class="btn ghost tiny">Open ↗</a>`:''}<button class="icobtn del" onclick="wsLinkDel('${n}',${j})">✕</button></div>`).join(''):`<div class="note">No links yet — add your draft docs, Canva boards or drive folders here.</div>`)+`</div>`;}
-html+=`<div class="sh">My notes <small>your space - autosaves</small></div><div class="card"><textarea class="editable" rows="5" style="width:100%;line-height:1.6" placeholder="Jot your thoughts, ideas, blockers, plan for the day... this is just for you." onblur="notesU('${n}',this.value)">${esc(state.notes[n]||'')}</textarea></div>`;
+html+=`<div class="sh">📝 Highlights for the weekly report <small>what you shipped &amp; moved this week — the CMO pulls this into the one-pager</small></div><div class="card" style="border-left:3px solid var(--wine)"><textarea class="editable" rows="4" style="width:100%;line-height:1.6" placeholder="2–4 lines: what you shipped, what moved a metric, what's next. This appears in the weekly report." onblur="weekHiU('${n}',this.value)">${esc(weekHiGet(n,rdrWeekId()))}</textarea><div class="note" style="margin-top:6px">Logging to <b>week of ${rdrWeekLabel(rdrWeekId())}</b> — earlier weeks are kept below.</div></div>${weekHiHistoryHTML(n)}`;
+ html+=`<div class="sh">My notes <small>your space - autosaves</small></div><div class="card"><textarea class="editable" rows="5" style="width:100%;line-height:1.6" placeholder="Jot your thoughts, ideas, blockers, plan for the day... this is just for you." onblur="notesU('${n}',this.value)">${esc(state.notes[n]||'')}</textarea></div>`;
  html+=`<div class="sh">All my tasks <small>${open.length} open · by priority · ☆ to add to Focus</small></div>`;
  let any=false;
  PO.forEach(P=>{const grp=open.filter(x=>pri(x)===P);if(!grp.length)return;any=true;
@@ -2445,7 +2623,7 @@ function importState(inp){const f=inp.files&&inp.files[0];if(!f)return;if(!confi
 function revFinalize(id){const r=findRev(id);if(!r)return;const today=new Date().toISOString().slice(0,10);let made=0;if(!Array.isArray(state.tasks))state.tasks=[];
  r.items.forEach(it=>{if(it.verdict==='Revise'){state.tasks.push(['Content','Revise: '+it.t+(it.fb?' — '+it.fb:''),r.owner,'To do','','High',r.reviewer,'',today,'']);made++;}else if(it.verdict==='Approved'&&!it.produced){state.tasks.push(['Content','Produce: '+it.t,r.owner,'To do','','High',r.reviewer,'',today,'']);it.produced=true;made++;}});
  r.finalized=true;save();const t=el('t_tasks');if(t)renderMod('tasks');revDetail();alert(made+' task(s) sent to '+r.owner+"'s workspace.");}
-const RENDER={home:renderHome,capture:renderCapture,command:renderCommand,team:renderTeam,direction:renderDirection,campaigns:renderCampaigns,plan:renderPlan,platforms:renderPlatforms,moms:renderMoM,reviews:renderReviews,ideas:()=>{renderMod('ideas');renderIdeaSum();},contentideas:renderCI,tasks:()=>renderMod('tasks'),outbound:()=>renderMod('outbound'),vendors:()=>renderMod('vendors'),reelcost:()=>renderMod('reelcost'),influencers:()=>renderMod('influencers'),reporting:renderReporting,trends:renderTrends,spend:renderSpend,performance:renderPerf,insights:renderInsights,sources:renderSources,guide:renderGuide,archive:renderArchive,tools:renderTools,pillars:renderPillars,pipeline:renderPipeline,calendar:renderCalendar,leads:renderLeads,budget:renderBudget,offers:renderOffers,events:()=>renderMod('events'),prod:renderProd,social:renderSocial,postperf:renderPostPerf,postcal:renderPostCal,opscal:renderOpsCal};
+const RENDER={reader:renderReader,wow:renderWoW,home:renderHome,capture:renderCapture,command:renderCommand,team:renderTeam,direction:renderDirection,campaigns:renderCampaigns,plan:renderPlan,platforms:renderPlatforms,moms:renderMoM,reviews:renderReviews,ideas:()=>{renderMod('ideas');renderIdeaSum();},contentideas:renderCI,tasks:()=>renderMod('tasks'),outbound:()=>renderMod('outbound'),vendors:()=>renderMod('vendors'),reelcost:()=>renderMod('reelcost'),influencers:()=>renderMod('influencers'),reporting:renderReporting,trends:renderTrends,spend:renderSpend,performance:renderPerf,insights:renderInsights,sources:renderSources,guide:renderGuide,archive:renderArchive,tools:renderTools,pillars:renderPillars,pipeline:renderPipeline,calendar:renderCalendar,leads:renderLeads,budget:renderBudget,offers:renderOffers,events:()=>renderMod('events'),prod:renderProd,social:renderSocial,postperf:renderPostPerf,postcal:renderPostCal,opscal:renderOpsCal};
 function renderAll(){buildViews();Object.keys(RENDER).forEach(k=>{try{RENDER[k]();}catch(e){console.warn(k,e);}});renderCapture();}
 async function live(){
  try{const r=await window.cowork.callMcpTool('mcp__Microsoft_Clarity__query-analytics-dashboard',{query:'Number of sessions where the referrer or source is Instagram, last 30 days'});
